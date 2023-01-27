@@ -18,13 +18,13 @@ public class Gestionnaire_De_Connection {
         String nom_BD = "system_scolarite";
         String userName = "sa";
         String password = "@*9292";
-
+        String database_path = "";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
 
 //            jdbc:sqlserver://localhost:1433;databaseName=system_scolarite;
 //            jdbc:sqlserver://localhost;user=MyUserName;password=*****;
-            connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=" + nom_BD, userName, password);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + database_path);
 
 
         } catch (Exception e) {

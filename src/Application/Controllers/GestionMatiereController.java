@@ -103,8 +103,8 @@ public class GestionMatiereController implements Initializable {
                                 String.format
                                         (
                                                 "delete from matiere where id_matiere = '%s' ;" +
-                                                        "delete from enseignement where matiere# = '%s';" +
-                                                        "delete from NOTE where matiere# = '%s'",
+                                                        "delete from enseignement where matiere = '%s';" +
+                                                        "delete from NOTE where matiere = '%s'",
                                                 matiere.getRefMatiere(), matiere.getRefMatiere(),matiere.getRefMatiere()
                                         )
                         );

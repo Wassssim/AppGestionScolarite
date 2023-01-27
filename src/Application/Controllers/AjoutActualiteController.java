@@ -45,7 +45,7 @@ public class AjoutActualiteController {
                     (
                             String.format
                                     (
-                                            "insert into ACTUALITE(sujet,description_actualite,ajoute_par_personnel#)\n" +
+                                            "insert into ACTUALITE(sujet,description_actualite,ajoute_par_personnel)\n" +
                                                     "values('%s','%s',%d)",
                                             txt_Sujet.getText(),
                                             txt_Description.getText(),

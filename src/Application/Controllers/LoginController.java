@@ -72,7 +72,7 @@ public class LoginController implements Initializable {
         String password = txtPassword.getText();
 
 //      Test Pour Etudiant
-        String query = "select code_massar,concat(nom, ' ' , prenom) as nomEtudiant, username, mot_de_passe from Etudiant where username = ? and mot_de_passe = ?";
+        String query = "select code_massar, nom, prenom, username, mot_de_passe from Etudiant where username = ? and mot_de_passe = ?";
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
                 wrongLbl.setVisible(true);
             } else {
                 Gestionnaire_De_Connection.etudiant_connecte = Reader.getString("code_massar");
-                Gestionnaire_De_Connection.nom_connecte = Reader.getString("nomEtudiant");
+                Gestionnaire_De_Connection.nom_connecte = Reader.getString("nom") + " " + Reader.getString("prenom");
                 URL url = new File("src/Application/Views/Home.fxml").toURI().toURL();
 
                 Parent root = FXMLLoader.load(url);
@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
         }
 
 
-        String queryPersonnel = "select id_personnel,concat(nom_personnel,' ',prenom_personnel) as NomPersonnel, username, mot_de_passe from personnel where username = ? and mot_de_passe = ?";
+        String queryPersonnel = "select id_personnel, nom_personnel, prenom_personnel, username, mot_de_passe from personnel where username = ? and mot_de_passe = ?";
         try {
             PreparedStatement preparedStatementP = connection.prepareStatement(queryPersonnel);
             preparedStatementP.setString(1, username);
@@ -120,7 +120,7 @@ public class LoginController implements Initializable {
                 Gestionnaire_De_Connection.prof_connecte = null;
                 Gestionnaire_De_Connection.etudiant_connecte = null;
                 Gestionnaire_De_Connection.personnel_connecte = Integer.valueOf(resultSetP.getString("id_personnel"));
-                Gestionnaire_De_Connection.nom_connecte = resultSetP.getString("NomPersonnel");
+                Gestionnaire_De_Connection.nom_connecte = resultSetP.getString("nom_personnel") + " " + resultSetP.getString("prenom_personnel");
                 URL url = new File("src/Application/Views/Home.fxml").toURI().toURL();
                 Parent root = FXMLLoader.load(url);
                 Scene scene = new Scene(root);
@@ -142,7 +142,7 @@ public class LoginController implements Initializable {
         }
 
 //        Test Pour Prof
-        String queryProf = "  select Code_Pro_Nationnal,concat(nom,' ',prenom) as NomProf, username, mot_de_passe from PROFESSEUR where username = ? and mot_de_passe = ?";
+        String queryProf = "  select Code_Pro_Nationnal, nom, prenom, username, mot_de_passe from PROFESSEUR where username = ? and mot_de_passe = ?";
         try {
             PreparedStatement preparedStatementPr = connection.prepareStatement(queryProf);
             preparedStatementPr.setString(1, username);
@@ -155,7 +155,7 @@ public class LoginController implements Initializable {
                 Gestionnaire_De_Connection.etudiant_connecte = null;
                 Gestionnaire_De_Connection.personnel_connecte = 0;
                 Gestionnaire_De_Connection.prof_connecte = resultSetPr.getString("Code_Pro_Nationnal");
-                Gestionnaire_De_Connection.nom_connecte = resultSetPr.getString("NomProf");
+                Gestionnaire_De_Connection.nom_connecte = resultSetPr.getString("nom") + " " + resultSetPr.getString("prenom");
                 URL url = new File("src/Application/Views/Home.fxml").toURI().toURL();
                 Parent root = FXMLLoader.load(url);
                 Scene scene = new Scene(root);

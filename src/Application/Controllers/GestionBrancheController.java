@@ -108,7 +108,7 @@ public class GestionBrancheController implements Initializable {
                                 String.format
                                         (
                                                 "delete from branche where id_branche = '%s' ;" +
-                                                        "delete from groupe where branche# = '%s';",
+                                                        "delete from groupe where branche = '%s';",
                                                 branche.getRefBranche(), branche.getRefBranche()
                                         )
                         );

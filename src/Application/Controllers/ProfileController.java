@@ -191,7 +191,7 @@ public class ProfileController implements Initializable {
                         ck_redouble.setSelected(false);
                     }
 
-                    String sq = "SELECT  g.libelle_grp FROM groupe g inner join etudiant e on g.id_groupe = e.groupe# where e.groupe#= %d '" + rs.getString("groupe#") + "'";
+                    String sq = "SELECT  g.libelle_grp FROM groupe g inner join etudiant e on g.id_groupe = e.groupe where e.groupe= %d '" + rs.getString("groupe") + "'";
                     ResultSet rd = con.createStatement().executeQuery(sq);
                     if (rd.next()) {
                         txt_groupe.setText(rs.getString("g.libelle_grp"));

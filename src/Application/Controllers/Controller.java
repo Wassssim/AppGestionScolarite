@@ -506,7 +506,7 @@ public class Controller implements Initializable {
     @FXML
     private void profil_show() {
         GererEffect(btnProfil_etd);
-
+        System.out.println("Profile clicked");
 //Si l'étudiant qui est connecté
         if (Gestionnaire_De_Connection.etudiant_connecte != null) {
             Pane_etd.toFront();
@@ -535,7 +535,7 @@ public class Controller implements Initializable {
                         ck_redouble.setSelected(false);
                     }
 
-                    String sq = "SELECT g.libelle_grp as LibGrp FROM groupe g where g.id_groupe= " + rs.getInt("groupe#");
+                    String sq = "SELECT g.libelle_grp as LibGrp FROM groupe g where g.id_groupe= " + rs.getInt("groupe");
                     ResultSet rd = con.createStatement().executeQuery(sq);
                     if (rd.next()) {
                         txt_groupe.setText(rd.getString("LibGrp"));
@@ -637,7 +637,7 @@ public class Controller implements Initializable {
                         (
                                 String.format
                                         (
-                                                "delete from ENSEIGNEMENT where professeur# = '%s' ;" +
+                                                "delete from ENSEIGNEMENT where professeur = '%s' ;" +
                                                         "delete from PROFESSEUR where Code_Pro_Nationnal = '%s';",
                                                 professeur.getNomCodeProf(), professeur.getNomCodeProf()
                                         )
@@ -746,7 +746,7 @@ public class Controller implements Initializable {
         try {
             Connection connection = gestionnaire_de_connection.getConnection();
             Statement stmMatiere = connection.createStatement();
-            ResultSet rss = stmMatiere.executeQuery("select * from matiere where id_matiere not in (select matiere# from ENSEIGNEMENT)");
+            ResultSet rss = stmMatiere.executeQuery("select * from matiere where id_matiere not in (select matiere from ENSEIGNEMENT)");
             ObservableList mat = FXCollections.observableArrayList();
             while (rss.next()) {
                 String matieres = rss.getString(2);
@@ -764,11 +764,11 @@ public class Controller implements Initializable {
         ObservableList<GestionProfViewModel> professeurs = FXCollections.observableArrayList();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("  select professeur.Code_Pro_Nationnal as codeProf,professeur.Cin as cin," +
-                " concat(professeur.Nom,' ',professeur.Prenom) as nomProf, \n" +
+                " professeur.Nom, professeur.Prenom, \n" +
                 "  professeur.Type_Contrat as typeContrat, matiere.LBL_Matiere as nomMatiere, groupe.libelle_grp as nomGroupe \n" +
-                "  from PROFESSEUR join ENSEIGNEMENT on PROFESSEUR.Code_Pro_Nationnal = ENSEIGNEMENT.professeur#\n" +
-                "  join MATIERE on ENSEIGNEMENT.matiere# = MATIERE.id_matiere\n" +
-                "  join GROUPE on GROUPE.id_groupe = ENSEIGNEMENT.groupe#");
+                "  from PROFESSEUR join ENSEIGNEMENT on PROFESSEUR.Code_Pro_Nationnal = ENSEIGNEMENT.professeur\n" +
+                "  join MATIERE on ENSEIGNEMENT.matiere = MATIERE.id_matiere\n" +
+                "  join GROUPE on GROUPE.id_groupe = ENSEIGNEMENT.groupe");
         while (resultSet.next()) {
             professeurs.addAll(new GestionProfViewModel(
                     resultSet.getString("codeProf"),
@@ -874,7 +874,7 @@ public class Controller implements Initializable {
                                             )
                             );
                     System.out.println(CB_Matieres.getSelectionModel().getSelectedItem().toString());
-                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ENSEIGNEMENT (professeur#,groupe#, matiere#) VALUES (?,?,?)");
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO ENSEIGNEMENT (professeur,groupe, matiere) VALUES (?,?,?)");
                     preparedStatement.setString(1, txtCodeProf.getText());
                     preparedStatement.setInt(2, IdGrp.get(i));
                     reader.next();
@@ -947,7 +947,7 @@ public class Controller implements Initializable {
             }
             try {
                 for (int i = 0; i < floawLayout_groupe.getChildren().size(); i++) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE ENSEIGNEMENT set groupe# = ?, matiere# = ? where professeur# = ?");
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE ENSEIGNEMENT set groupe = ?, matiere = ? where professeur = ?");
                     preparedStatement.setInt(1, IdGrp.get(i));
                     preparedStatement.setInt(2, CB_Matieres.getSelectionModel().getSelectedIndex() + 1);
                     preparedStatement.setString(3, txtCodeProf.getText());
@@ -1038,7 +1038,7 @@ public class Controller implements Initializable {
             }
 
             Statement groupeProfstm = connection.createStatement();
-            ResultSet groupeResultSet = groupeProfstm.executeQuery("  SELECT GROUPE.libelle_grp as libelleGroupe from GROUPE JOIN ENSEIGNEMENT on GROUPE.id_groupe = ENSEIGNEMENT.groupe# WHERE ENSEIGNEMENT.professeur# = '" + txtSearch.getText() + "'");
+            ResultSet groupeResultSet = groupeProfstm.executeQuery("  SELECT GROUPE.libelle_grp as libelleGroupe from GROUPE JOIN ENSEIGNEMENT on GROUPE.id_groupe = ENSEIGNEMENT.groupe WHERE ENSEIGNEMENT.professeur = '" + txtSearch.getText() + "'");
             while (groupeResultSet.next()) {
                 CB_Groupes.setPromptText(groupeResultSet.getString("libelleGroupe"));
                 floawLayout_groupe.getChildren().clear();
@@ -1064,7 +1064,7 @@ public class Controller implements Initializable {
             }
 
             Statement matiereStm = connection.createStatement();
-            ResultSet matiResultSet = matiereStm.executeQuery("SELECT MATIERE.LBL_Matiere as lblMatiere FROM MATIERE JOIN ENSEIGNEMENT on  ENSEIGNEMENT.matiere# = MATIERE.id_matiere WHERE ENSEIGNEMENT.professeur# = '" + txtSearch.getText() + "'");
+            ResultSet matiResultSet = matiereStm.executeQuery("SELECT MATIERE.LBL_Matiere as lblMatiere FROM MATIERE JOIN ENSEIGNEMENT on  ENSEIGNEMENT.matiere = MATIERE.id_matiere WHERE ENSEIGNEMENT.professeur = '" + txtSearch.getText() + "'");
             if (matiResultSet.next()) {
                 CB_Matieres.setPromptText(matiResultSet.getString("lblMatiere"));
             }
@@ -1144,17 +1144,17 @@ public class Controller implements Initializable {
         try {
             Statement sqlCommand = connection.createStatement();
             ResultSet dataReader = sqlCommand.executeQuery("select MATIERE.LBL_Matiere as libelleMatiere, MATIERE.Coeff as Coeff," +
-                    " concat(PROFESSEUR.Nom, ' ' ,PROFESSEUR.Prenom ) as Nom_Professeur\n" +
-                    "from ETUDIANT join groupe on ETUDIANT.groupe# = groupe.id_groupe\n" +
-                    "join ENSEIGNEMENT on GROUPE.id_groupe = ENSEIGNEMENT.groupe#\n" +
-                    "join MATIERE on ENSEIGNEMENT.matiere# = MATIERE.id_matiere\n" +
-                    "join PROFESSEUR on PROFESSEUR.Code_Pro_Nationnal = ENSEIGNEMENT.professeur#\n" +
+                    " PROFESSEUR.Nom, PROFESSEUR.Prenom \n" +
+                    "from ETUDIANT join groupe on ETUDIANT.groupe = groupe.id_groupe\n" +
+                    "join ENSEIGNEMENT on GROUPE.id_groupe = ENSEIGNEMENT.groupe\n" +
+                    "join MATIERE on ENSEIGNEMENT.matiere = MATIERE.id_matiere\n" +
+                    "join PROFESSEUR on PROFESSEUR.Code_Pro_Nationnal = ENSEIGNEMENT.professeur \n" +
                     "where ETUDIANT.code_massar = '" + Gestionnaire_De_Connection.etudiant_connecte + "'\n" +
                     "and MATIERE.id_matiere = " + id_mat);
 
             ObservableList<String> data = FXCollections.observableArrayList();
             Statement statementNotes = connection.createStatement();
-            ResultSet resultSet = statementNotes.executeQuery(" select Valeur_Note from note where etudiant_ = '" + Gestionnaire_De_Connection.etudiant_connecte + "' and matiere# = " + id_mat);
+            ResultSet resultSet = statementNotes.executeQuery(" select Valeur_Note from note where etudiant_ = '" + Gestionnaire_De_Connection.etudiant_connecte + "' and matiere = " + id_mat);
 
             if (dataReader.next()) {
                 String LBLMAtiere = dataReader.getString("libelleMatiere");
@@ -1232,22 +1232,22 @@ public class Controller implements Initializable {
             /// **************** Remplissage pieChartEtudiant ******************************************************
 
             dataReader = sqlCommand.executeQuery("select count(n.Valeur_Note) as notePositive\n" +
-                    "from ETUDIANT et inner join GROUPE grp on et.groupe# = grp.id_groupe \n" +
-                    "\t\t\t\tinner join ENSEIGNEMENT en on en.groupe# = grp.id_groupe\n" +
-                    "\t\t\t\tinner join MATIERE ma on ma.id_matiere = en.matiere#\n" +
-                    "\t\t\t\tinner join NOTE n on n.matiere# = ma.id_matiere\n" +
-                    "where n.Valeur_Note >= 10" +
+                    "from ETUDIANT et inner join GROUPE grp on et.groupe = grp.id_groupe \n" +
+                    "\t\t\t\tinner join ENSEIGNEMENT en on en.groupe = grp.id_groupe\n" +
+                    "\t\t\t\tinner join MATIERE ma on ma.id_matiere = en.matiere\n" +
+                    "\t\t\t\tinner join NOTE n on n.matiere = ma.id_matiere\n" +
+                    "where n.Valeur_Note >= 10 " +
                     "and n.etud" +
                     "iant_ = '" + Gestionnaire_De_Connection.etudiant_connecte + "'");
             dataReader.next();
             int notePositive = dataReader.getInt("notePositive");
 
             dataReader = sqlCommand.executeQuery("select count(n.Valeur_Note) as noteNegative\n" +
-                    "from ETUDIANT et inner join GROUPE grp on et.groupe# = grp.id_groupe \n" +
-                    "\t\t\t\tinner join ENSEIGNEMENT en on en.groupe# = grp.id_groupe\n" +
-                    "\t\t\t\tinner join MATIERE ma on ma.id_matiere = en.matiere#\n" +
-                    "\t\t\t\tinner join NOTE n on n.matiere# = ma.id_matiere\n" +
-                    "where n.Valeur_Note < 10" +
+                    "from ETUDIANT et inner join GROUPE grp on et.groupe = grp.id_groupe \n" +
+                    "\t\t\t\tinner join ENSEIGNEMENT en on en.groupe = grp.id_groupe\n" +
+                    "\t\t\t\tinner join MATIERE ma on ma.id_matiere = en.matiere\n" +
+                    "\t\t\t\tinner join NOTE n on n.matiere = ma.id_matiere\n" +
+                    "where n.Valeur_Note < 10 " +
                     "and n.etudiant_ = '" + Gestionnaire_De_Connection.etudiant_connecte + "'");
             dataReader.next();
             int noteNegative = dataReader.getInt("noteNegative");
@@ -1280,7 +1280,7 @@ public class Controller implements Initializable {
             barchartEtudiant.setCategoryGap(3);
 
             dataReader = sqlCommand.executeQuery("select ma.LBL_Matiere as matiere, sum(n.Valeur_Note) / count(*) as moyenne\n" +
-                    "from NOTE n inner join MATIERE ma on n.matiere# = ma.id_matiere\n" +
+                    "from NOTE n inner join MATIERE ma on n.matiere = ma.id_matiere\n" +
                     "where n.etudiant_ = '" + Gestionnaire_De_Connection.etudiant_connecte + "'" +
                     "group by ma.LBL_Matiere");
             while (dataReader.next()) {
@@ -1320,10 +1320,10 @@ public class Controller implements Initializable {
             //****************************************************************************
             //*************** Remplissage du tableau**************************
             dataReader = sqlCommand.executeQuery("select etd.nom as nom_complet , sum(n.Valeur_Note) / count(*) as moyenne_etudiant\n" +
-                    "from NOTE n inner join MATIERE ma on n.matiere# = ma.id_matiere\n" +
-                    "\t\t\t--inner join ENSEIGNEMENT en on en.matiere# = ma.id_matiere\n" +
-                    "\t\t\t--inner join GROUPE grp on grp.id_groupe = en.groupe#\n" +
-                    "\t\t\t--inner join ETUDIANT etd on etd.groupe# = grp.id_groupe\n" +
+                    "from NOTE n inner join MATIERE ma on n.matiere = ma.id_matiere\n" +
+                    "\t\t\t--inner join ENSEIGNEMENT en on en.matiere = ma.id_matiere\n" +
+                    "\t\t\t--inner join GROUPE grp on grp.id_groupe = en.groupe\n" +
+                    "\t\t\t--inner join ETUDIANT etd on etd.groupe = grp.id_groupe\n" +
                     "\t\t\tinner join ETUDIANT etd  on etd.code_massar = n.etudiant_ \n" +
                     "group by etd.nom, ma.LBL_Matiere\n");
             int classement = 1;
@@ -1459,7 +1459,7 @@ public class Controller implements Initializable {
             Connection sqlConnection = gestionnaire_de_connection.getConnection();
             Statement sqlCommand = sqlConnection.createStatement();
             ResultSet dataReader = sqlCommand.executeQuery("select grp.libelle_grp as Groupe , count(etd.code_massar) as nbrEffectif\n" +
-                    "from etudiant etd inner join groupe grp on etd.groupe# = grp.id_groupe\n" +
+                    "from etudiant etd inner join groupe grp on etd.groupe = grp.id_groupe\n" +
                     "group by grp.libelle_grp");
             String nomGroupe;
             int nbrEffectif;
@@ -1721,8 +1721,8 @@ public class Controller implements Initializable {
                             String.format
                                     (
                                             "select grp.*\n" +
-                                                    "from groupe grp inner join enseignement en on grp.id_groupe = en.groupe#\n" +
-                                                    "where en.professeur# = '%s'",
+                                                    "from groupe grp inner join enseignement en on grp.id_groupe = en.groupe\n" +
+                                                    "where en.professeur = '%s'",
                                             Gestionnaire_De_Connection.prof_connecte
                                     )
                     );
@@ -1878,7 +1878,7 @@ public class Controller implements Initializable {
                             String.format
                                     (
                                             "INSERT INTO [dbo].[ALERT_CONTROLE]\n" +
-                                                    "           ([groupe#]\n" +
+                                                    "           ([groupe]\n" +
                                                     "           ,[date_control]\n" +
                                                     "           ,[heure_debut]\n" +
                                                     "           ,[heure_fin]\n" +
@@ -1925,10 +1925,10 @@ public class Controller implements Initializable {
                                         (
                                                 "select alrt.* , grp.libelle_grp\n" +
                                                         "from alert_controle alrt \n" +
-                                                        "inner join groupe grp on alrt.groupe# = grp.id_groupe\n" +
+                                                        "inner join groupe grp on alrt.groupe = grp.id_groupe\n" +
                                                         "where grp.id_groupe = (" +
                                                         "                    select grpp.id_groupe\n" +
-                                                        "                    from groupe grpp inner join etudiant etd on etd.groupe# = grpp.id_groupe\n" +
+                                                        "                    from groupe grpp inner join etudiant etd on etd.groupe = grpp.id_groupe\n" +
                                                         "                    where etd.code_massar = '%s'\n" +
                                                         "                     )",
                                                 Gestionnaire_De_Connection.etudiant_connecte
@@ -1980,8 +1980,8 @@ public class Controller implements Initializable {
             Statement sqlCommand = connection.createStatement();
             ResultSet dataReader = sqlCommand.executeQuery
                     (
-                            "select act.sujet, act.description_actualite, CONCAT(per.nom_personnel, ' ', per.prenom_personnel ) as nomComplet\n" +
-                                    "from ACTUALITE act inner join PERSONNEL per on act.ajoute_par_personnel# = per.id_personnel"
+                            "select act.sujet, act.description_actualite, per.nom_personnel, per.prenom_personnel\n" +
+                                    "from ACTUALITE act inner join PERSONNEL per on act.ajoute_par_personnel = per.id_personnel"
                     );
 
             while (dataReader.next()) {
@@ -2036,7 +2036,7 @@ public class Controller implements Initializable {
         try {
             Statement sqlCommand = connection.createStatement();
             ResultSet dataReader = sqlCommand.executeQuery("select et.code_massar, et.prenom, et.nom, et.date_inscription, et.email, et.telephone, et.a_deja_redouble, et.sexe, et.adresse\n" +
-                    "from etudiant et inner join groupe grp on et.groupe# = grp.id_groupe\n" +
+                    "from etudiant et inner join groupe grp on et.groupe = grp.id_groupe\n" +
                     "where grp.id_groupe = " + id_grp);
 
             while (dataReader.next()) {
@@ -2241,11 +2241,11 @@ public class Controller implements Initializable {
                     (
                             String.format
                                     (
-                                            "select etd.code_massar, CONCAT(etd.prenom , ' ' , etd.nom) as nom_complet \n" +
-                                                    "from etudiant etd inner join groupe grp on etd.groupe# = grp.id_groupe\n" +
-                                                    "\t\t\t\t  inner join enseignement en on en.groupe# = grp.id_groupe\n" +
+                                            "select etd.code_massar, etd.prenom, etd.nom as nom_complet \n" +
+                                                    "from etudiant etd inner join groupe grp on etd.groupe = grp.id_groupe\n" +
+                                                    "\t\t\t\t  inner join enseignement en on en.groupe = grp.id_groupe\n" +
                                                     "where grp.id_groupe = %d" +
-                                                    "\t  and en.professeur# = '%s'",
+                                                    "\t  and en.professeur = '%s'",
                                             id_grp,
                                             gestionnaire_de_connection.prof_connecte
                                     )
@@ -2262,9 +2262,9 @@ public class Controller implements Initializable {
                                         (
                                                 "select top 3 n.Valeur_Note \n" +
                                                         "from note n\n" +
-                                                        "where n.etudiant_ = '%s'\n" +
-                                                        "and matiere# = (select top 1 en.matiere#\n" +
-                                                        "from professeur prof inner join ENSEIGNEMENT en on prof.Code_Pro_Nationnal = en.professeur#\n" +
+                                                        "where n.etudiant_ = '%s' \n" +
+                                                        "and matiere = (select top 1 en.matiere\n" +
+                                                        "from professeur prof inner join ENSEIGNEMENT en on prof.Code_Pro_Nationnal = en.professeur\n" +
                                                         "where prof.Code_Pro_Nationnal = '%s')",
                                                 code_massar,
                                                 gestionnaire_de_connection.prof_connecte

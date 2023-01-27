@@ -100,7 +100,7 @@ public class InscrireController implements Initializable {
             java.sql.Date date = new java.sql.Date(currentDate.getTime());
             //        Date date = new Date(currentDate.getTime());
             PreparedStatement preparedStatement = connection.prepareStatement("insert into ETUDIANT(code_massar,nom, prenom, date_naissance,date_inscription,email,telephone,a_deja_redouble, " +
-                    "sexe, adresse,groupe#, username, mot_de_passe)values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    "sexe, adresse,groupe, username, mot_de_passe)values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
 //            ajouter dessus champs groupe hakka bla groupe raha khdama mais fach nzidou makatkhdemch !!
 
 
