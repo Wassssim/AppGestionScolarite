@@ -1,10 +1,10 @@
 .button
 {
--fx-background-color : #8560FF;
--fx-text-fill : #e7e5e5;
+-fx-background-color : #cc2936;
+-fx-text-fill : #fdfdfd;
 }
 .button:hover{
--fx-background-color : #3333ff;
+-fx-background-color : #ff4353;
 }
 /*.button:pressed*/
 /*{*/
@@ -12,7 +12,7 @@
 /*}*/
 .button:pressed
 {
-    -fx-background-color : #2F2B43 ;
+    -fx-background-color : #a31d28 ;
 }
 
 .scroll-pane {

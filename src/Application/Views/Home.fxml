@@ -24,6 +24,7 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,10 +33,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="1275.0" style="-fx-background-color: #8560FF; -fx-background-radius: 30px; -fx-border-radius: 30px;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="1275.0" style="-fx-background-color: #08415c; -fx-background-radius: 30px; -fx-border-radius: 30px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.Controller">
     <!-- <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="1212.0" style="-fx-background-color: #8560FF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.Controller"> -->
     <children>
         <VBox fx:id="VboxMenu" alignment="TOP_CENTER" prefHeight="667.0" prefWidth="258.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="9.0" AnchorPane.topAnchor="0.0">
@@ -47,6 +49,9 @@
                     <VBox.margin>
                         <Insets bottom="10.0" top="50.0" />
                     </VBox.margin>
+               <effect>
+                  <ColorAdjust hue="-0.19" />
+               </effect>
                 </ImageView>
                 <Label fx:id="userLBL" text="User Connecté" textFill="#e7e5e5">
                     <VBox.margin>
@@ -81,7 +86,7 @@
 
                 <Button fx:id="btnProfil_etd" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#profil_show" prefHeight="42.0" prefWidth="178.0" stylesheets="@../../resources/Styles/style.css" text="Mon profil">
                     <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="47.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../resources/images/SideBarIcons/profilBlanc.png" />
                             </image>
@@ -185,6 +190,26 @@
                 </Button>
                 <!--                <Region prefHeight="20" VBox.vgrow="ALWAYS" />-->
 
+                <Button fx:id="btnNotes" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#btnNotes_click" prefHeight="42.0" prefWidth="178.0" stylesheets="@../../resources/Styles/style.css" text="Mes notes" visible="true">
+                    <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../resources/images/SideBarIcons/NotesBlanc.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <padding>
+                        <Insets left="30.0" />
+                    </padding>
+                    <font>
+                        <Font name="Cambria Bold Italic" size="16.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="30.0" />
+                    </VBox.margin>
+                </Button>
+                <!--                <Region prefHeight="20" VBox.vgrow="ALWAYS" />-->
+      
                 <Button fx:id="btnStatistiquesetudiant" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#btnStatistiquesetudiant_click" prefHeight="42.0" prefWidth="178.0" stylesheets="@../../resources/Styles/style.css" text="Statistiques " visible="false">
                     <graphic>
                         <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
@@ -210,26 +235,6 @@
                         <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../resources/images/SideBarIcons/alertMessageBlanc.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <padding>
-                        <Insets left="30.0" />
-                    </padding>
-                    <font>
-                        <Font name="Cambria Bold Italic" size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="30.0" />
-                    </VBox.margin>
-                </Button>
-                <!--                <Region prefHeight="20" VBox.vgrow="ALWAYS" />-->
-
-                <Button fx:id="btnNotes" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#btnNotes_click" prefHeight="42.0" prefWidth="178.0" stylesheets="@../../resources/Styles/style.css" text="Mes notes" visible="false">
-                    <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../resources/images/SideBarIcons/NotesBlanc.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -354,11 +359,17 @@
                     <image>
                         <Image url="@../../resources/images/messages.png" />
                     </image>
+               <effect>
+                  <ColorAdjust hue="-0.21" saturation="-0.4" />
+               </effect>
                 </ImageView>
                 <ImageView fx:id="img2_Accueil" fitHeight="265.0" fitWidth="341.0" layoutX="515.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../resources/images/news.png" />
                     </image>
+               <effect>
+                  <ColorAdjust hue="-0.2" saturation="-0.4" />
+               </effect>
                 </ImageView>
                 <Label layoutX="407.0" layoutY="34.0" text="Accueil" textFill="#6f6f6f" underline="true">
                     <font>
@@ -1332,7 +1343,7 @@
                         <DropShadow color="#f3612d" radius="15.9575" width="44.83" />
                     </effect>
                 </Pane>
-                <Pane layoutX="348.0" layoutY="79.0" prefHeight="105.0" prefWidth="214.0" style="-fx-background-color: #529EFF; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                <Pane layoutX="348.0" layoutY="79.0" prefHeight="105.0" prefWidth="214.0" style="-fx-background-color: #1b4185; -fx-border-radius: 10px; -fx-background-radius: 10px;">
                     <children>
                         <Label layoutX="13.0" layoutY="7.0" text="Nombre total des professeurs :" textFill="WHITE">
                             <font>
@@ -1351,17 +1362,21 @@
                         </ImageView>
                     </children>
                     <effect>
-                        <DropShadow color="#529eff" height="32.92" radius="18.9375" width="44.83" />
+                        <DropShadow height="38.88" radius="20.427500000000002" width="44.83">
+                     <color>
+                        <Color red="0.10588235408067703" green="0.2549019753932953" blue="0.5215686559677124" />
+                     </color>
+                  </DropShadow>
                     </effect>
                 </Pane>
-                <Pane layoutX="629.0" layoutY="79.0" prefHeight="105.0" prefWidth="214.0" style="-fx-background-color: #4B46FE; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                <Pane layoutX="629.0" layoutY="79.0" prefHeight="105.0" prefWidth="214.0" style="-fx-background-color: #f7cd44; -fx-border-radius: 10px; -fx-background-radius: 10px;">
                     <children>
-                        <Label layoutX="13.0" layoutY="7.0" text="Nombre total des groupes :" textFill="WHITE">
+                        <Label layoutX="13.0" layoutY="7.0" text="Nombre total des groupes :">
                             <font>
                                 <Font name="System Italic" size="14.0" />
                             </font>
                         </Label>
-                        <Label fx:id="nbreGroupe" layoutX="152.0" layoutY="40.0" text="23" textFill="WHITE" underline="true">
+                        <Label fx:id="nbreGroupe" layoutX="152.0" layoutY="40.0" text="23" underline="true">
                             <font>
                                 <Font name="System Bold Italic" size="25.0" />
                             </font>
@@ -1370,10 +1385,17 @@
                             <image>
                                 <Image url="@../../resources/images/SideBarIcons/groups.png" />
                             </image>
+                     <effect>
+                        <ColorAdjust brightness="-1.0" />
+                     </effect>
                         </ImageView>
                     </children>
                     <effect>
-                        <DropShadow color="#4b46fe" height="32.92" radius="18.9375" width="44.83" />
+                        <DropShadow height="30.15" radius="13.8475" width="27.24">
+                     <color>
+                        <Color red="0.9686274528503418" green="0.8039215803146362" blue="0.2666666805744171" opacity="0.4399999976158142" />
+                     </color>
+                  </DropShadow>
                     </effect>
                 </Pane>
                 <Label layoutX="494.0" layoutY="245.0" text="Moyennes &amp; Notes" textFill="#464646" underline="true">
@@ -1423,7 +1445,8 @@
                         <Image url="@../../resources/images/refresh.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
             <Pane layoutX="498.0" layoutY="577.0" prefHeight="17.0" prefWidth="16.0" style="-fx-background-color: #00cc00; -fx-border-radius: 5px; -fx-background-radius: 5px;" />
             <Label layoutX="531.0" layoutY="576.0" text="Moyenne &gt; 10" textFill="#464646">
                <font>

@@ -1532,7 +1532,7 @@ public class Controller implements Initializable {
         btnListes.setEffect(null);
         btnStatistiques.setEffect(null);
         btnGestion.setEffect(null);
-        btnStatistiquesetudiant.setEffect(null);
+        //btnStatistiquesetudiant.setEffect(null);
         btnAlert.setEffect(null);
         btnNotes.setEffect(null);
 
@@ -1810,7 +1810,7 @@ public class Controller implements Initializable {
         Form_Load();
         alertPanel_Load();
         PanelGestionEtudiant_Load();
-        statistiqueEtudiant_Load();
+        //statistiqueEtudiant_Load();
         statistiquesPersonnel_Load();
         PanelGestionNotes_Load();
 
@@ -1820,7 +1820,7 @@ public class Controller implements Initializable {
             VboxMenu.getChildren().remove(btnGestion);
             VboxMenu.getChildren().remove(btnAlert);
             VboxMenu.getChildren().remove(btnGestionProf);
-            btnStatistiquesetudiant.setVisible(true);
+            //btnStatistiquesetudiant.setVisible(true);
             btnNotes.setVisible(true);
             imgUser.setImage(new Image(getClass().getResourceAsStream("..\\..\\resources\\images\\graduation.png")));
 

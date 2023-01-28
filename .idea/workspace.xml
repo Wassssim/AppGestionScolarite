@@ -2,20 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RestaurantMgt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RestaurantMgt.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RestaurantMgt/Application/Controllers/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RestaurantMgt/Application/Controllers/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RestaurantMgt/Application/Data/Gestionnaire_De_Connection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RestaurantMgt/Application/Data/Gestionnaire_De_Connection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RestaurantMgt/META-INF/RestaurantMgt.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/AjoutActualiteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/AjoutActualiteController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Application/Controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/GestionBrancheController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/GestionBrancheController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/GestionMatiereController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/GestionMatiereController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/InscrireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/InscrireController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/Controllers/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Controllers/ProfileController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Application/Data/Gestionnaire_De_Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Data/Gestionnaire_De_Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/Views/Home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Views/Home.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/Views/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Views/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/Views/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Views/Profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/Styles/AccueilStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/Styles/AccueilStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/Styles/LoginStyling.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/Styles/LoginStyling.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/Styles/MaterialDesign.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/Styles/MaterialDesign.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/Styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/Styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
